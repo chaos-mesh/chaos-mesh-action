@@ -28,10 +28,10 @@ RUN apt-get update && apt-get install -y git && \
 RUN apt-get update && \
     curl -L ${RELEASE_ROOT}/${RELEASE_FILE} |tar xvz && \
     mv linux-amd64/helm /usr/bin/helm && \
-    chmod +x /usr/bin/helm    
+    chmod +x /usr/bin/helm
 
 COPY utils ./utils
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-
+CMD ["help"]

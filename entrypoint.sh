@@ -8,7 +8,9 @@ CHAOS_KIND=${CHAOS_KIND:="NULL"}
 ##Extract the base64 encoded config data and write this to the KUBECONFIG
 mkdir -p ${HOME}/.kube
 echo "$KUBE_CONFIG_DATA" | base64 --decode > ${HOME}/.kube/config
+sed -i "s/127.0.0.1/${IP}/g" ${HOME}/.kube/config
 export KUBECONFIG=${HOME}/.kube/config
+cat ${HOME}/.kube/config
 
 ls -l ./
 
