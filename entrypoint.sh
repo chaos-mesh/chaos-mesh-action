@@ -16,9 +16,11 @@ ls -l ./
 
 #ifconfig
 
+git clone https://github.com/chaos-mesh/chaos-mesh.git
+
 helm version
 kubectl version
-kubectl apply -f https://github.com/chaos-mesh/chaos-mesh/blob/master/manifests/crd.yaml
+kubectl apply -f ./chaos-mesh/manifests/crd.yaml
 kubectl create ns chaos-testing
 helm install chaos-mesh helm/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
 kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
