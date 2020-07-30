@@ -12,7 +12,7 @@ export KUBECONFIG=${HOME}/.kube/config
 
 ls -l ./
 
-ifconfig
+#ifconfig
 
 helm version
 kubectl version
