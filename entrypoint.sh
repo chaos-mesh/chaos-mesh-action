@@ -5,6 +5,11 @@ set -e
 CHAOS_DURATION=${CHAOS_DURATION:=60}
 CHAOS_KIND=${CHAOS_KIND:="NULL"}
 
+##Extract the base64 encoded config data and write this to the KUBECONFIG
+mkdir -p ${HOME}/.kube
+echo "$KUBE_CONFIG_DATA" | base64 --decode > ${HOME}/.kube/config
+export KUBECONFIG=${HOME}/.kube/config
+
 ls -l ./
 
 helm version

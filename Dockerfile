@@ -30,6 +30,7 @@ RUN apt-get update && \
     mv linux-amd64/helm /usr/bin/helm && \
     chmod +x /usr/bin/helm    
 
+COPY utils ./utils
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
