@@ -12,6 +12,8 @@ export KUBECONFIG=${HOME}/.kube/config
 
 ls -l ./
 
+ifconfig
+
 helm version
 kubectl version
 kubectl apply -f https://github.com/chaos-mesh/chaos-mesh/blob/master/manifests/crd.yaml
