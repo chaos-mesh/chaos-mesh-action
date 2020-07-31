@@ -38,15 +38,15 @@ spec:
   action: delay # the specific chaos action to inject
   mode: one # the mode to run chaos action; supported modes are one/all/fixed/fixed-percent/random-max-percent
   selector: # pods where to inject chaos actions
-	namespaces:
-	  - default
-	labelSelectors:
-	  "app": "nginx"  # the label of the pod for chaos injection
-  delay:
-	latency: "10ms"
-  duration: "30s" # duration for the injected chaos experiment
-  scheduler: # scheduler rules for the running time of the chaos experiments about pods.
-	cron: "@every 60s"
+    namespaces:
+      - default
+    labelSelectors:
+      "app": "nginx"  # the label of the pod for chaos injection
+    delay:
+      latency: "10ms"
+    duration: "30s" # duration for the injected chaos experiment
+    scheduler: # scheduler rules for the running time of the chaos experiments about pods.
+      cron: "@every 60s"
 	`
 
 	switch tp {
