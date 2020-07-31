@@ -4,8 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-
-	"github.com/juju/errors"
 )
 
 func main() {
@@ -85,7 +83,7 @@ func (c *Config) Parse(arguments []string) error {
 	// Parse first to get config file.
 	err := c.FlagSet.Parse(arguments)
 	if err != nil {
-		return errors.Trace(err)
+		return err
 	}
 
 	return nil
