@@ -22,10 +22,12 @@ echo "wait pod status to running"
 for ((k=0; k<10; k++)); do
     kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh > pods.status
     cat pods.status
+    echo "\ngit "
 
     run_num=`grep Running pods.status | wc -l`
     pod_num=$((`cat pods.status | wc -l` - 1))
     if [ $run_num == $pod_num ]; then
+        echo "run_num: $run_num"
         break
     fi
 
