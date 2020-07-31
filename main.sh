@@ -34,5 +34,3 @@ for ((k=0; k<10; k++)); do
 done
 
 kubectl apply -f chaos.yaml
-
-sleep $CHAOS_DURATION
