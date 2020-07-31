@@ -4,6 +4,7 @@ set -e
 
 CHAOS_DURATION=${CHAOS_DURATION:=60}
 CHAOS_KIND=${CHAOS_KIND:="NULL"}
+APP_NAME=${APP_NAME:="NULL"}
 
 git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
 go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND}

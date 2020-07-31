@@ -13,7 +13,12 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	err = GenerateConfigFile(cfg.ChaosType)
+	if !cfg.Verify() {
+		fmt.Println("config is invalid, please check it")
+		os.Exit(1)
+	}
+
+	err = GenerateConfigFile(cfg)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -21,7 +26,7 @@ func main() {
 }
 
 // GenerateConfigFile generates config file for chaos mesh
-func GenerateConfigFile(tp string) error {
+func GenerateConfigFile(cfg *Config) error {
 	fileName := "chaos.yaml"
 	f, err := os.Create(fileName)
 	if err != nil {
@@ -31,7 +36,7 @@ func GenerateConfigFile(tp string) error {
 
 	cfgContent := `
 apiVersion: chaos-mesh.org/v1alpha1
-kind: NetworkChaos
+kind: %s
 metadata:
   name: web-show-network-delay
 spec:
@@ -41,16 +46,16 @@ spec:
     namespaces:
       - default
     labelSelectors:
-      "app": "nginx"  # the label of the pod for chaos injection
+      "app": "%s"  # the label of the pod for chaos injection
     delay:
       latency: "10ms"
-    duration: "30s" # duration for the injected chaos experiment
+    duration: "%ds" # duration for the injected chaos experiment
     scheduler: # scheduler rules for the running time of the chaos experiments about pods.
       cron: "@every 60s"`
 
-	switch tp {
+	switch cfg.ChaosKind {
 	case "NetworkChaos":
-		_, err = f.WriteString(cfgContent)
+		_, err = f.WriteString(fmt.Sprintf(cfgContent, cfg.ChaosKind, cfg.AppName, cfg.Duration))
 		if err != nil {
 			return err
 		}
@@ -63,7 +68,9 @@ spec:
 type Config struct {
 	*flag.FlagSet
 
-	ChaosType string
+	ChaosKind string
+	AppName   string
+	Duration  int64
 }
 
 // NewConfig returns Config by flag
@@ -72,7 +79,9 @@ func NewConfig() *Config {
 	cfg.FlagSet = flag.NewFlagSet("chaos-mesh-actions", flag.ContinueOnError)
 	fs := cfg.FlagSet
 
-	fs.StringVar(&cfg.ChaosType, "chaos-type", "", "chaos type")
+	fs.StringVar(&cfg.ChaosKind, "chaos-type", "", "chaos type")
+	fs.StringVar(&cfg.AppName, "app-name", "", "applition name")
+	fs.Int64Var(&cfg.Duration, "duration", 10, "chaos duration")
 
 	return cfg
 }
@@ -86,4 +95,21 @@ func (c *Config) Parse(arguments []string) error {
 	}
 
 	return nil
+}
+
+// Verify verifies the config is valide or not
+func (c *Config) Verify() bool {
+	if len(c.ChaosKind) == 0 {
+		return false
+	}
+
+	if len(c.AppName) == 0 {
+		return false
+	}
+
+	if c.Duration == 0 {
+		return false
+	}
+
+	return true
 }
