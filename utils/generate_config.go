@@ -46,8 +46,7 @@ spec:
       latency: "10ms"
     duration: "30s" # duration for the injected chaos experiment
     scheduler: # scheduler rules for the running time of the chaos experiments about pods.
-      cron: "@every 60s"
-	`
+      cron: "@every 60s"`
 
 	switch tp {
 	case "NetworkChaos":
