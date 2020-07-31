@@ -30,7 +30,7 @@ func GenerateConfigFile(tp string) error {
 	defer f.Close()
 
 	cfgContent := `
-apiVersion: pingcap.com/v1alpha1
+apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
   name: web-show-network-delay

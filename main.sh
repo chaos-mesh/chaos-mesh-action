@@ -18,5 +18,4 @@ kubectl apply -f ./manifests/crd.yaml
 kubectl create ns chaos-testing
 helm install chaos-mesh helm/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
 kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
-
 kubectl apply -f chaos.yaml
