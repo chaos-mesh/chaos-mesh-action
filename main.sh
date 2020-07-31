@@ -7,7 +7,7 @@ CHAOS_KIND=${CHAOS_KIND:="NULL"}
 APP_NAME=${APP_NAME:="NULL"}
 
 git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
-go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND}
+go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND} --duration ${CHAOS_DURATION} --app-name ${APP_NAME}
 
 git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
