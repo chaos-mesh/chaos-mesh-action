@@ -1,8 +1,10 @@
-# chaos-mesh-actions [WIP]
+# chaos-mesh-actions
 
 Using Chaos Mesh in Github Action.
 
-Example:
+## How To Use
+
+`chaos-mesh-actions` can be used in GitHub's workflows, there is an example config file:
 
 ```yaml
 name: Push
@@ -52,3 +54,8 @@ CFG_BASE64=`base64  ./chaos.yaml`
 ```
 
 `chaos.yaml` is your chaos config file.
+
+## Limits
+
+- Need to deploy k8s cluster in workflows, links to private k8s clusters are not supported now.
+- Only support helm 3.x now.
