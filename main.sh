@@ -8,7 +8,7 @@ APP_NAME=${APP_NAME:="NULL"}
 CFG_BASE64=${CFG_BASE64:="NULL"}
 
 echo "generate chaos.yaml"
-if [ "$CFG_BASE64" == "NULL" ]; then
+if [ "$CFG_BASE64" != "NULL" ]; then
     echo "$CFG_BASE64" | base64 --decode > chaos.yaml
 else
     git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
