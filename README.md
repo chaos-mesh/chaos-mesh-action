@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Creating kind cluster 
+    - name: Creating kind cluster
       uses: helm/kind-action@v1.0.0-rc.1
 
     - name: Print cluster information
@@ -32,11 +32,23 @@ jobs:
     - name: Deploy an application
       run: |
         kubectl run nginx --image=nginx
-        
+
     - name: Run chaos mesh action
-      uses: WangXiangUSTC/chaos-mesh-actions@master
+      uses: chaos-mesh/chaos-mesh-actions@master
       env:
-        CHAOS_KIND: NetworkChaos
-        CHAOS_DURATION: 30
-        APP_NAME: nginx
+        CFG_BASE64:${CFG_BASE64}
+
+    - name: Verify
+      run: |
+        echo "do some verify"
+        kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
+
 ```
+
+The ${CFG_BASE64} is generate by command:
+
+```shell
+CFG_BASE64=`base64  ./chaos.yaml`
+```
+
+`chaos.yaml` is your chaos config file.
