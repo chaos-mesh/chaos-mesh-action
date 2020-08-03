@@ -5,9 +5,16 @@ set -e
 CHAOS_DURATION=${CHAOS_DURATION:=60}
 CHAOS_KIND=${CHAOS_KIND:="NULL"}
 APP_NAME=${APP_NAME:="NULL"}
+CFG_BASE64=${CFG_BASE64:="NULL"}
 
-git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
-go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND} --duration ${CHAOS_DURATION} --app-name ${APP_NAME}
+echo "generate chaos.yaml"
+if [ "$CFG_BASE64" == "NULL" ]; then
+    echo "$CFG_BASE64" | base64 --decode > chaos.yaml
+else
+    git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
+    go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND} --duration ${CHAOS_DURATION} --app-name ${APP_NAME}
+fi
+cat chaos.yaml
 
 git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
@@ -34,5 +41,3 @@ for ((k=0; k<10; k++)); do
 done
 
 kubectl apply -f chaos.yaml
-
-sleep $CHAOS_DURATION
