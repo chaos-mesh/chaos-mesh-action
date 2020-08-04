@@ -29,7 +29,7 @@ jobs:
 
     - name: Deploy an application
       run: |
-        kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping-baidu/busybox-statefulset.yaml
+        kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping/busybox-statefulset.yaml
         
     - name: Check pods
       run: |
