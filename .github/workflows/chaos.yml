@@ -31,12 +31,11 @@ jobs:
       run: |
         kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping-baidu/busybox-statefulset.yaml
         
-    - name: Check pods and ping before chaos
+    - name: Check pods
       run: |
         kubectl get pods -n chaos-testing
         sleep 5
         kubectl get pods -n busybox
-        kubectl exec busybox-0 -it -n busybox -- ping -c 10 busybox-1.busybox.busybox.svc
         
     - name: Run chaos mesh action
       uses: WangXiangUSTC/chaos-mesh-actions@master
@@ -46,4 +45,4 @@ jobs:
     - name: Verify
       run: |
         echo "do some verify"
-        kubectl exec busybox-0 -it -n busybox -- ping -c 10 busybox-1.busybox.busybox.svc
+        kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
