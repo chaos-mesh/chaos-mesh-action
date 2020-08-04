@@ -34,7 +34,6 @@ jobs:
     - name: Check pods
       run: |
         kubectl get pods -n chaos-testing
-        sleep 5
         kubectl get pods -n busybox
         
     - name: Run chaos mesh action
@@ -45,4 +44,7 @@ jobs:
     - name: Verify
       run: |
         echo "do some verify"
-        kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
+        echo "ping from busybox-0 to busybox-1"
+        kubectl exec busybox-0 -it -n busybox -- ping -c 10 busybox-1.busybox.busybox.svc
+        echo "ping from busybox-1 to busybox-0"
+        kubectl exec busybox-1 -it -n busybox -- ping -c 10 busybox-0.busybox.busybox.svc
