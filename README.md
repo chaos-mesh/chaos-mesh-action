@@ -1,4 +1,4 @@
-# chaos-mesh-actions
+# chaos-mesh-actions ![Push](https://github.com/chaos-mesh/chaos-mesh-actions/workflows/Push/badge.svg)
 
 Using Chaos Mesh in Github Action.
 
