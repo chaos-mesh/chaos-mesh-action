@@ -2,17 +2,14 @@
 
 set -e
 
-CHAOS_DURATION=${CHAOS_DURATION:=60}
-CHAOS_KIND=${CHAOS_KIND:="NULL"}
-APP_NAME=${APP_NAME:="NULL"}
 CFG_BASE64=${CFG_BASE64:="NULL"}
 
 echo "generate chaos.yaml"
 if [ "$CFG_BASE64" != "NULL" ]; then
     echo "$CFG_BASE64" | base64 --decode > chaos.yaml
 else
-    git clone https://github.com/WangXiangUSTC/chaos-mesh-actions.git
-    go run chaos-mesh-actions/utils/generate_config.go --chaos-type ${CHAOS_KIND} --duration ${CHAOS_DURATION} --app-name ${APP_NAME}
+    echo "CFG_BASE64 is empty"
+    exit 1
 fi
 cat chaos.yaml
 
@@ -20,6 +17,7 @@ git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
 mv ../chaos.yaml ./
 
+echo "install chaos mesh"
 helm version
 kubectl version
 kubectl apply -f ./manifests/crd.yaml
