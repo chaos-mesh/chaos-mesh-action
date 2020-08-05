@@ -7,18 +7,22 @@ Using Chaos Mesh in Github Action.
 `chaos-mesh-actions` can be used in GitHub's workflows, there is an example config file:
 
 ```yaml
-name: Push
+name: Chaos
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Creating kind cluster
+    - name: Creating kind cluster 
       uses: helm/kind-action@v1.0.0-rc.1
 
     - name: Print cluster information
@@ -29,22 +33,28 @@ jobs:
         kubectl get pods -n kube-system
         helm version
         kubectl version
+
     - uses: actions/checkout@v2
 
     - name: Deploy an application
       run: |
-        kubectl run nginx --image=nginx
-
+        kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping/busybox-statefulset.yaml
+        
+    - name: Check pods
+      run: |
+        kubectl get pods -n chaos-testing
+        sleep 5
+        kubectl get pods -n busybox
+        
     - name: Run chaos mesh action
       uses: chaos-mesh/chaos-mesh-actions@master
       env:
-        CFG_BASE64:${CFG_BASE64}
+        CFG_BASE64: ${CFG_BASE64}
 
     - name: Verify
       run: |
         echo "do some verify"
         kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
-
 ```
 
 The ${CFG_BASE64} is generate by command:
