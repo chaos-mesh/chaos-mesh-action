@@ -1,71 +1,66 @@
 # chaos-mesh-actions ![Chaos](https://github.com/chaos-mesh/chaos-mesh-actions/workflows/Chaos/badge.svg)
 
-Using Chaos Mesh in Github Action.
+A GitHub Action that applies Chaos Mesh in workflow. More detail about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
 
-## How To Use
+## Features
 
-`chaos-mesh-actions` can be used in GitHub's workflows, there is an example config file:
+chaos-mesh-actions automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
+
+## Example Usage
+
+### Prepare chaos configuration file
+
+First, prepare the chaos’ yaml configuration file which you expect to be injected into the system, for example:
 
 ```yaml
-name: Chaos
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+ name: network-delay
+ namespace: busybox
+spec:
+ action: delay # the specific chaos action to inject
+ mode: all
+ selector:
+   pods:
+     busybox:
+       - busybox-0
+ delay:
+   latency: "10ms"
+ duration: "5s"
+ scheduler:
+   cron: "@every 10s"
+ direction: to
+ target:
+   selector:
+     pods:
+       busybox:
+         - busybox-1
+   mode: all
+```
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+### Encode chaos configuration file with base64
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+Obtain the base64 value of the chaos configuration file through the following command:
 
-    - name: Creating kind cluster 
-      uses: helm/kind-action@v1.0.0-rc.1
+```shell
+CFG_BASE64=`base64 chaos.yaml`
+```
 
-    - name: Print cluster information
-      run: |
-        kubectl config view
-        kubectl cluster-info
-        kubectl get nodes
-        kubectl get pods -n kube-system
-        helm version
-        kubectl version
+### Create workflow
 
-    - uses: actions/checkout@v2
+When creating workflow in Actions, use chaos-mesh/chaos-mesh-actions in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
 
-    - name: Deploy an application
-      run: |
-        kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping/busybox-statefulset.yaml
-        
-    - name: Check pods
-      run: |
-        kubectl get pods -n chaos-testing
-        sleep 5
-        kubectl get pods -n busybox
-        
+```yaml
     - name: Run chaos mesh action
       uses: chaos-mesh/chaos-mesh-actions@master
       env:
         CFG_BASE64: ${CFG_BASE64}
-
-    - name: Verify
-      run: |
-        echo "do some verify"
-        kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
 ```
 
-The ${CFG_BASE64} is generate by command:
+For the complete configuration file, see the [sample configuration file](https://github.com/chaos-mesh/chaos-mesh-actions/blob/master/.github/workflows/chaos.yml).
 
-```shell
-CFG_BASE64=`base64  ./chaos.yaml`
-```
-
-`chaos.yaml` is your chaos config file.
-
-## Limits
+## Limitation
 
 - Need to deploy k8s cluster in workflows, links to private k8s clusters are not supported now.
 - Only support helm 3.x now.
