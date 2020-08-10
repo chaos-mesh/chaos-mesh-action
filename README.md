@@ -1,16 +1,16 @@
 # chaos-mesh-action ![Chaos](https://github.com/chaos-mesh/chaos-mesh-action/workflows/Chaos/badge.svg)
 
-A GitHub Action that applies chaos enginnering by Chaos Mesh in the workflow. More detail about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
+A GitHub Action that applies chaos engineering by Chaos Mesh in the workflow. More details about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
 
 ## Features
 
-`chaos-mesh-action` automatically deploy the Chaos Mesh environment and injects the specified chaos experiment.
+`chaos-mesh-action` automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
 
 ## Example Usage
 
 ### Prepare chaos configuration file
 
-First, prepare the chaos’ yaml configuration file which you expect to be injected into the system, for example:
+First, prepare the chaos’ YAML configuration file which you expect to be injected into the system, for example:
 
 ```yaml
 apiVersion: chaos-mesh.org/v1alpha1
@@ -51,7 +51,7 @@ CFG_BASE64=`base64 chaos.yaml`
 
 #### Deploy K8s cluster
 
-Need to deploy a K8s cluster in workflow, can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action).
+Need to deploy a K8s cluster in the workflow, can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action).
 
 #### Use chaos-mesh-action
 
