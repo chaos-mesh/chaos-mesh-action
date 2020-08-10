@@ -1,10 +1,10 @@
 # chaos-mesh-actions ![Chaos](https://github.com/chaos-mesh/chaos-mesh-actions/workflows/Chaos/badge.svg)
 
-A GitHub Action that applies Chaos Mesh in workflow. More detail about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
+A GitHub Action that applies Chaos Mesh in the workflow. More detail about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
 
 ## Features
 
-chaos-mesh-actions automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
+`chaos-mesh-actions` automatically deploy the Chaos Mesh environment and injects the specified chaos experiment.
 
 ## Example Usage
 
@@ -47,9 +47,9 @@ Obtain the base64 value of the chaos configuration file through the following co
 CFG_BASE64=`base64 chaos.yaml`
 ```
 
-### Create workflow
+### Create the workflow
 
-When creating workflow in Actions, use chaos-mesh/chaos-mesh-actions in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
+When creating the workflow in Actions, use chaos-mesh/chaos-mesh-actions in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
 
 ```yaml
     - name: Run chaos mesh action
