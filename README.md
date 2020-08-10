@@ -68,5 +68,5 @@ For the complete configuration file, see the [sample configuration file](https:/
 
 ## Limitation
 
-- Link to private K8s clusters are not supported now.
+- Link to private K8s clusters is not supported now.
 - Only support helm 3.x now.
