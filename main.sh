@@ -13,29 +13,15 @@ else
 fi
 cat chaos.yaml
 
-git clone https://github.com/chaos-mesh/chaos-mesh.git
-cd chaos-mesh
-mv ../chaos.yaml ./
-
 echo "install chaos mesh"
 helm version
 kubectl version
-kubectl apply -f ./manifests/crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/chaos-mesh/master/manifests/crd.yaml
 kubectl create ns chaos-testing
 helm install chaos-mesh helm/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
 
 echo "wait pod status to running"
-for ((k=0; k<30; k++)); do
-    kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh > pods.status
-    cat pods.status
-
-    run_num=`grep Running pods.status | wc -l`
-    pod_num=$((`cat pods.status | wc -l` - 1))
-    if [ $run_num == $pod_num ]; then
-        break
-    fi
-
-    sleep 1
-done
+kubectl wait --namespace=chaos-testing --for=condition=Ready pods  --all
+kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh
 
 kubectl apply -f chaos.yaml
