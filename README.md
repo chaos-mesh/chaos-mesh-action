@@ -47,13 +47,13 @@ CFG_BASE64=`base64 chaos.yaml`
 
 ### Step 3. Create the workflow
 
-#### Deploy the Kubernetes cluster
+1. Deploy the Kubernetes cluster
 
 A Kubernetes cluster is required for the workflow. You can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action) to deploy.
 
-#### Use chaos-mesh-action
+2. Use `chaos-mesh-action`.
 
-To create the workflow in GitHub action, use chaos-mesh/chaos-mesh-action in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
+To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
 
 ```yaml
     - name: Run chaos mesh action
