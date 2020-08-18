@@ -6,7 +6,7 @@ For more details on Chaos Mesh, refer to [https://chaos-mesh.org/](https://chaos
 
 ## Usage
 
-### Prepare chaos configuration file
+### Step 1. Prepare chaos configuration file
 
 Prepare the configuration file (YAML) of the failures which you expect to inject into the system, for example:
 
