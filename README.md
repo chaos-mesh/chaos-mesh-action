@@ -1,16 +1,14 @@
 # chaos-mesh-action ![Chaos](https://github.com/chaos-mesh/chaos-mesh-action/workflows/Chaos/badge.svg)
 
-A GitHub Action that applies chaos engineering by Chaos Mesh in the workflow. More details about Chaos Mesh can see [https://chaos-mesh.org/](https://chaos-mesh.org/).
+`chaos-mesh-action` is a GitHub action that applies chaos engineering to your development workflow using Chaos Mesh. It automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
 
-## Features
+For more details on Chaos Mesh, refer to [https://chaos-mesh.org/](https://chaos-mesh.org/).
 
-`chaos-mesh-action` automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
+## Usage
 
-## Example Usage
+### Step 1. Prepare chaos configuration file
 
-### Prepare chaos configuration file
-
-First, prepare the chaos’ YAML configuration file which you expect to be injected into the system, for example:
+Prepare the configuration file (YAML) of the failures which you expect to inject into the system, for example:
 
 ```yaml
 apiVersion: chaos-mesh.org/v1alpha1
@@ -39,23 +37,23 @@ spec:
    mode: all
 ```
 
-### Encode chaos configuration file with base64
+### Step 2. Encode the chaos configuration file with base64
 
-Obtain the base64 value of the chaos configuration file through the following command:
+Obtain the base64 value of the chaos configuration file using the following command:
 
 ```shell
 CFG_BASE64=`base64 chaos.yaml`
 ```
 
-### Create the workflow
+### Step 3. Create the workflow
 
-#### Deploy K8s cluster
+1. Deploy the Kubernetes cluster
 
-Need to deploy a K8s cluster in the workflow, can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action).
+A Kubernetes cluster is required for the workflow. You can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action) to deploy.
 
-#### Use chaos-mesh-action
+2. Use `chaos-mesh-action`.
 
-When creating the workflow in Actions, use chaos-mesh/chaos-mesh-action in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
+To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
 
 ```yaml
     - name: Run chaos mesh action
@@ -64,9 +62,9 @@ When creating the workflow in Actions, use chaos-mesh/chaos-mesh-action in the y
         CFG_BASE64: ${CFG_BASE64}
 ```
 
-For the complete configuration file, see the [sample configuration file](https://github.com/chaos-mesh/chaos-mesh-action/blob/master/.github/workflows/chaos.yml).
+For the complete configuration file, see [sample](https://github.com/chaos-mesh/chaos-mesh-action/blob/master/.github/workflows/chaos.yml).
 
 ## Limitation
 
-- Link to private K8s clusters is not supported now.
-- Only support helm 3.x now.
+- Link to private K8s clusters is not supported for now.
+- Only helm 3.x is supported for now.
