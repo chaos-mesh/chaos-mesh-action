@@ -1,4 +1,5 @@
 # chaos-mesh-action ![Chaos](https://github.com/chaos-mesh/chaos-mesh-action/workflows/Chaos/badge.svg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fchaos-mesh%2Fchaos-mesh-action.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fchaos-mesh%2Fchaos-mesh-action?ref=badge_shield)
 
 `chaos-mesh-action` is a GitHub action that applies chaos engineering to your development workflow using Chaos Mesh. It automatically deploys the Chaos Mesh environment and injects the specified chaos experiment.
 
@@ -68,3 +69,7 @@ For the complete configuration file, see [sample](https://github.com/chaos-mesh/
 
 - Link to private K8s clusters is not supported for now.
 - Only helm 3.x is supported for now.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fchaos-mesh%2Fchaos-mesh-action.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fchaos-mesh%2Fchaos-mesh-action?ref=badge_large)
