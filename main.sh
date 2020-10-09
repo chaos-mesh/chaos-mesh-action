@@ -16,7 +16,7 @@ cat chaos.yaml
 
 git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
-if ["$CHAOS_MESH_VERSION" != "LATEST" ]; then
+if [ "$CHAOS_MESH_VERSION" != "LATEST" ]; then
     echo "use version $CHAOS_MESH_VERSION"
     git checkout $CHAOS_MESH_VERSION
 fi
