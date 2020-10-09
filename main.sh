@@ -3,6 +3,7 @@
 set -e
 
 CFG_BASE64=${CFG_BASE64:="NULL"}
+CHAOS_MESH_VERSION=${CHAOS_MESH_VERSION:="LATEST"}
 
 echo "generate chaos.yaml"
 if [ "$CFG_BASE64" != "NULL" ]; then
@@ -15,6 +16,11 @@ cat chaos.yaml
 
 git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
+if [ "$CHAOS_MESH_VERSION" != "LATEST" ]; then
+    echo "use version $CHAOS_MESH_VERSION"
+    git checkout $CHAOS_MESH_VERSION
+fi
+
 mv ../chaos.yaml ./
 
 echo "install chaos mesh"

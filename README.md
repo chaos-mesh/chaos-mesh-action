@@ -53,13 +53,14 @@ A Kubernetes cluster is required for the workflow. You can use [Kind Cluster](ht
 
 2. Use `chaos-mesh-action`.
 
-To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in the yaml configuration file and configure the base64 value of the chaos configuration file. The chaos-mesh related configuration is as follows:
+To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in the yaml configuration file and configure the base64 value of the chaos configuration file, and set the version of Chaos Mesh. The chaos-mesh related configuration is as follows:
 
 ```yaml
     - name: Run chaos mesh action
       uses: chaos-mesh/chaos-mesh-action@master
       env:
         CFG_BASE64: ${CFG_BASE64}
+        CHAOS_MESH_VERSION: v1.0.0
 ```
 
 For the complete configuration file, see [sample](https://github.com/chaos-mesh/chaos-mesh-action/blob/master/.github/workflows/chaos.yml).
