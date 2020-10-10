@@ -14,7 +14,7 @@ if [ "$CFG_BASE64" != "NULL" ]; then
     echo "**** chaos configuration ****"
     cat chaos.yaml
     echo "*****************************"
-else if [ "$CFG_FILE" != "NULL" ]; then
+elif [ "$CFG_FILE" != "NULL" ]; then
     CFG_FILE_PATH="${CFG_FILE}"
 else
     echo "CFG_BASE64 and CFG_FILE is empty, can not get chaos configuration"
