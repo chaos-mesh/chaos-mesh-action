@@ -8,7 +8,6 @@ CHAOS_MESH_VERSION=${CHAOS_MESH_VERSION:="LATEST"}
 
 CFG_FILE_PATH=""
 
-echo "generate chaos.yaml"
 if [ "$CFG_BASE64" != "NULL" ]; then
     echo "$CFG_BASE64" | base64 --decode > chaos.yaml
     CFG_FILE_PATH="./chaos.yaml"
@@ -30,6 +29,8 @@ if [ "$CHAOS_MESH_VERSION" != "LATEST" ]; then
 fi
 
 mv ../chaos.yaml ./
+
+echo "CFG_FILE_PATH is $CFG_FILE_PATH"
 
 echo "install chaos mesh"
 helm version
