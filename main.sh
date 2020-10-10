@@ -12,7 +12,9 @@ echo "generate chaos.yaml"
 if [ "$CFG_BASE64" != "NULL" ]; then
     echo "$CFG_BASE64" | base64 --decode > chaos.yaml
     CFG_FILE_PATH="./chaos.yaml"
+    echo "**** chaos configuration ****"
     cat chaos.yaml
+    echo "*****************************"
 else if [ "$CFG_FILE" != "NULL" ]; then
     CFG_FILE_PATH="${CFG_FILE}"
 else
