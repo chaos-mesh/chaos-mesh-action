@@ -37,7 +37,7 @@ spec:
    mode: all
 ```
 
-### Step 2. Encode the chaos configuration file with base64
+### Step 2. Encode the chaos configuration file with base64 (optional)
 
 Obtain the base64 value of the chaos configuration file using the following command:
 
@@ -62,6 +62,17 @@ To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in t
         CFG_BASE64: ${CFG_BASE64}
         CHAOS_MESH_VERSION: v1.0.0
 ```
+
+If the chaos configuration file is committed to GitHub, you can set `CFG_FILE` as the path to the file:
+
+```yaml
+    - name: Run chaos mesh action
+      uses: chaos-mesh/chaos-mesh-action@master
+      env:
+        CFG_FILE: https://raw.githubusercontent.com/chaos-mesh/chaos-mesh-action/master/chaos-test.yaml
+        CHAOS_MESH_VERSION: v1.0.0
+```
+
 
 For the complete configuration file, see [sample](https://github.com/chaos-mesh/chaos-mesh-action/blob/master/.github/workflows/chaos.yml).
 
