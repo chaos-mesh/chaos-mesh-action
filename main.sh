@@ -3,16 +3,22 @@
 set -e
 
 CFG_BASE64=${CFG_BASE64:="NULL"}
+CFG_FILE=${CFG_FILE:="NULL"}
 CHAOS_MESH_VERSION=${CHAOS_MESH_VERSION:="LATEST"}
+
+CFG_FILE_PATH=""
 
 echo "generate chaos.yaml"
 if [ "$CFG_BASE64" != "NULL" ]; then
     echo "$CFG_BASE64" | base64 --decode > chaos.yaml
+    CFG_FILE_PATH="./chaos.yaml"
+    cat chaos.yaml
+else if [ "$CFG_FILE" != "NULL" ]; then
+    CFG_FILE_PATH="${CFG_FILE}"
 else
-    echo "CFG_BASE64 is empty"
+    echo "CFG_BASE64 and CFG_FILE is empty, can not get chaos configuration"
     exit 1
 fi
-cat chaos.yaml
 
 git clone https://github.com/chaos-mesh/chaos-mesh.git
 cd chaos-mesh
@@ -44,4 +50,4 @@ for ((k=0; k<30; k++)); do
     sleep 1
 done
 
-kubectl apply -f chaos.yaml
+kubectl apply -f $CFG_FILE_PATH
