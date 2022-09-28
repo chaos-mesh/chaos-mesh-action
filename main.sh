@@ -37,7 +37,7 @@ kubectl create ns chaos-testing
 helm install chaos-mesh helm/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
 
 echo "wait pod status to running"
-for ((k=0; k<30; k++)); do
+for ((k=0; k<120; k++)); do
     kubectl get pods --namespace chaos-testing -l app.kubernetes.io/instance=chaos-mesh > pods.status
     cat pods.status
 
