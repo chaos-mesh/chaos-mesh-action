@@ -32,7 +32,7 @@ echo "CFG_FILE_PATH is $CFG_FILE_PATH"
 echo "install chaos mesh"
 helm version
 kubectl version
-kubectl apply -f ./manifests/crd.yaml
+kubectl create -f ./manifests/crd.yaml
 kubectl create ns chaos-testing
 helm install chaos-mesh helm/chaos-mesh --namespace=chaos-testing --set chaosDaemon.runtime=containerd --set chaosDaemon.socketPath=/run/containerd/containerd.sock
 
