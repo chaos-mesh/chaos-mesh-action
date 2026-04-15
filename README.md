@@ -14,27 +14,27 @@ Prepare the configuration file (YAML) of the failures which you expect to inject
 apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
 metadata:
- name: network-delay
- namespace: busybox
+  name: network-delay
+  namespace: busybox
 spec:
- action: delay # the specific chaos action to inject
- mode: all
- selector:
-   pods:
-     busybox:
-       - busybox-0
- delay:
-   latency: "10ms"
- duration: "5s"
- scheduler:
-   cron: "@every 10s"
- direction: to
- target:
-   selector:
-     pods:
-       busybox:
-         - busybox-1
-   mode: all
+  action: delay # the specific chaos action to inject
+  mode: all
+  selector:
+    pods:
+      busybox:
+        - busybox-0
+  delay:
+    latency: "10ms"
+  duration: "5s"
+  scheduler:
+    cron: "@every 10s"
+  direction: to
+  target:
+    selector:
+      pods:
+        busybox:
+          - busybox-1
+    mode: all
 ```
 
 ### Step 2. Encode the chaos configuration file with base64 (optional)
@@ -51,28 +51,27 @@ CFG_BASE64=`base64 chaos.yaml`
 
 A Kubernetes cluster is required for the workflow. You can use [Kind Cluster](https://github.com/marketplace/actions/kind-cluster) or [Kind Action](https://github.com/marketplace/actions/kind-kubernetes-in-docker-action) to deploy.
 
-2. Use `chaos-mesh-action`.
+1. Use `chaos-mesh-action`
 
 To create the workflow in GitHub action, use `chaos-mesh/chaos-mesh-action` in the yaml configuration file and configure the base64 value of the chaos configuration file, and set the version of Chaos Mesh. The chaos-mesh related configuration is as follows:
 
 ```yaml
-    - name: Run chaos mesh action
-      uses: chaos-mesh/chaos-mesh-action@master
-      env:
-        CFG_BASE64: ${CFG_BASE64}
-        CHAOS_MESH_VERSION: v1.0.0
+- name: Run chaos mesh action
+  uses: chaos-mesh/chaos-mesh-action@master
+  env:
+    CFG_BASE64: ${CFG_BASE64}
+    CHAOS_MESH_VERSION: v1.0.0
 ```
 
 If the chaos configuration file is committed to GitHub, you can set `CFG_FILE` as the path to the file:
 
 ```yaml
-    - name: Run chaos mesh action
-      uses: chaos-mesh/chaos-mesh-action@master
-      env:
-        CFG_FILE: https://raw.githubusercontent.com/chaos-mesh/chaos-mesh-action/master/chaos-test.yaml
-        CHAOS_MESH_VERSION: v1.0.0
+- name: Run chaos mesh action
+  uses: chaos-mesh/chaos-mesh-action@master
+  env:
+    CFG_FILE: https://raw.githubusercontent.com/chaos-mesh/chaos-mesh-action/master/chaos-test.yaml
+    CHAOS_MESH_VERSION: v1.0.0
 ```
-
 
 For the complete configuration file, see [sample](https://github.com/chaos-mesh/chaos-mesh-action/blob/master/.github/workflows/chaos.yml).
 

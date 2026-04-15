@@ -1,7 +1,7 @@
 name: 'Chaos Mesh'
 description: 'Orchestrate chaos on Kubernetes environments'
 runs:
-  using: "node12"
+  using: "node24"
   main: "main.js"
 branding:
   icon: 'terminal'
